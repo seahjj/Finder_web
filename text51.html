@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조사과정</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* 스크롤 방지 */
+        }
+        .corner-image {
+            position: absolute;
+            top: 10px; /* 이미지 화면 상단 위치 조정 */
+            left: 30px; /* 이미지 화면 좌측 위치 조정 */
+            width: 170px; /* 기본 이미지 크기 */
+            z-index: 10; /* 다른 요소 위에 배치 */
+        }
+        #file2 {
+            left: 200px; /* 두 번째 이미지를 약간 오른쪽으로 이동 */
+        }
+        #random-images-container img {
+            position: absolute;
+            cursor: grab; /* 드래그 가능한 포인터 표시 */
+            transition: all 0.5s ease; /* 드래그 및 크기 조정 시 부드러운 전환 효과 */
+        }
+        #random-images-container img:active {
+            cursor: grabbing; /* 드래그 중 포인터 변경 */
+        }
+    </style>
+</head>
+<body>
+    <img id="file1" src="11.svg" alt="11.svg" class="corner-image">
+    <img id="file2" src="12.svg" alt="12.svg" class="corner-image">
+    <div id="random-images-container"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const file1 = document.getElementById("file1");
+            const file2 = document.getElementById("file2");
+            const container = document.getElementById("random-images-container");
+            let randomImagesVisible = false; // 이미지 표시 여부 상태 변수
+
+            /**
+             * 특정 범위의 무작위 이미지를 생성하는 함수
+             * @param {string} prefix 이미지 파일 이름의 접두사
+             * @param {number} count 생성할 이미지 개수
+             */
+            function createRandomImages(prefix, count) {
+                container.innerHTML = ""; // 기존 이미지 초기화
+                for (let i = 1; i <= count; i++) {
+                    const img = document.createElement("img");
+                    img.src = `${prefix}${i}.jpg`; // 이미지 파일 경로 생성
+                    img.alt = `${prefix}${i}`;
+                    img.style.width = "110px"; // 기본 이미지 크기
+                    img.style.height = "80px";
+                    img.style.top = `${Math.random() * (window.innerHeight - 50)}px`; // 화면 내 무작위 위치 설정
+                    img.style.left = `${Math.random() * (window.innerWidth - 50)}px`;
+                    container.appendChild(img);
+
+                    // 드래그 가능하도록 설정
+                    img.addEventListener("mousedown", (e) => dragImage(e, img));
+
+                    // 클릭 시 확대 효과
+                    img.addEventListener("click", () => enlargeImageCustom(img));
+                }
+            }
+
+            /**
+             * 이미지를 드래그하는 함수
+             * @param {MouseEvent} event 마우스 이벤트
+             * @param {HTMLElement} img 드래그할 이미지 요소
+             */
+            function dragImage(event, img) {
+                event.preventDefault();
+                let offsetX = event.clientX - img.offsetLeft;
+                let offsetY = event.clientY - img.offsetTop;
+
+                function moveAt(e) {
+                    img.style.left = `${e.clientX - offsetX}px`;
+                    img.style.top = `${e.clientY - offsetY}px`;
+                }
+
+                document.addEventListener("mousemove", moveAt);
+                document.addEventListener("mouseup", () => {
+                    document.removeEventListener("mousemove", moveAt);
+                }, { once: true });
+            }
+
+ /**
+ * 이미지 클릭 시 비율에 구애받지 않고 확대하는 함수
+ * @param {HTMLElement} img 확대할 이미지 요소
+ *
+ * 이 함수는 이미지를 클릭했을 때, 사용자 정의 크기로
+ * 가로 비율을 강조하며 확대합니다.
+ */
+function enlargeImageCustom(img) {
+    // 원래 크기를 저장합니다.
+    const originalWidth = img.offsetWidth; // 이미지의 원래 너비 저장
+    const originalHeight = img.offsetHeight; // 이미지의 원래 높이 저장
+
+    // 확대 크기 설정
+    const enlargedWidth = originalWidth * 2; // 가로 2배로 확대
+    const enlargedHeight = originalHeight * 1.8; // 세로 1.5배로 확대
+
+    // 이미지 확대
+    img.style.transition = "all 0.8s"; // 0.8초 동안 부드럽게 전환
+    img.style.width = `${enlargedWidth}px`; // 너비를 사용자 정의 크기로 설정
+    img.style.height = `${enlargedHeight}px`; // 높이를 사용자 정의 크기로 설정
+
+    // 클릭 후 복구
+    setTimeout(() => {
+        resetImageCustom(img, originalWidth, originalHeight);
+    }, 1200); // 1.2초 뒤 원래 크기로 복구
+}
+
+/**
+ * 이미지 크기를 원래 크기로 복구하는 함수
+ * @param {HTMLElement} img 복구할 이미지 요소
+ * @param {number} originalWidth 이미지의 원래 너비
+ * @param {number} originalHeight 이미지의 원래 높이
+ *
+ * 이 함수는 원래 크기로 복구합니다.
+ */
+function resetImageCustom(img, originalWidth, originalHeight) {
+    img.style.width = `${originalWidth}px`; // 원래 너비로 복구
+    img.style.height = `${originalHeight}px`; // 원래 높이로 복구
+    img.style.transition = "all 0.5s"; // 복구 시 부드러운 전환 효과
+}
+
+// 사용 예제
+// 클래스 이름이 'clickable-image'인 모든 이미지 요소에 이 기능을 적용합니다.
+document.querySelectorAll(".clickable-image").forEach(img => {
+    img.addEventListener("click", () => enlargeImageCustom(img));
+});
+
+
+            /**
+             * 이미지의 표시 및 숨기기를 전환하는 함수
+             * @param {HTMLElement} file 클릭된 이미지 요소
+             * @param {string} secondForm 교체할 이미지 파일 이름
+             * @param {string} prefix 무작위로 생성할 이미지 접두사
+             * @param {number} count 무작위 이미지 개수
+             */
+            function toggleRandomImages(file, secondForm, prefix, count) {
+                if (!randomImagesVisible) {
+                    createRandomImages(prefix, count);
+                    file.src = secondForm; // 이미지 교체
+                } else {
+                    container.innerHTML = ""; // 모든 이미지 제거
+                    file.src = file.dataset.original; // 원래 이미지로 복원
+                }
+                randomImagesVisible = !randomImagesVisible;
+            }
+
+            // file1 및 file2의 원래 이미지 경로 저장
+            file1.dataset.original = "11.svg";
+            file2.dataset.original = "12.svg";
+
+            // file1과 file2에 더블 클릭 이벤트 추가
+            file1.addEventListener("dblclick", () => toggleRandomImages(file1, "11_.svg", "image", 11));
+            file2.addEventListener("dblclick", () => toggleRandomImages(file2, "12_.svg", "image_", 10));
+        });
+    </script>
+</body>
+</html>
