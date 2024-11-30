@@ -6,14 +6,19 @@
     <title>Text 2 Window</title>
     <style>
         /* ChosunKg 폰트 정의 */
-        @font-face {
-            font-family: 'ChosunKg';
-            src: url('chosunkg.woff2') format('woff2'),
-                 url('chosunkg.woff') format('woff'),
-                 url('chosunkg.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
+       @font-face {
+        font-family: 'ChosunKg';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunKg.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+    * {
+        font-family: 'ChosunKg';
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        line-height:130% ;
 
         /* 공통 스타일 */
         body {
