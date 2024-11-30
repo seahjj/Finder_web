@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>목걸이 찾아드립니다</title>
+        <style>
+            html, body { margin:0px; height: 100%; }
+            .text {
+                font-family: 'ChosunKg';
+                text-align: center;
+            }
+        </style>
+        <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@v0.169.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.169.0/examples/jsm/"
+            }
+        }
+        </script>
+    </head>
+    <body bgcolor="#ffffff">
+        <div>
+            <h1 class="text"> ★★★★★ </h1>  
+            <p class="text">맛있는 칼국수집을 찾을 수 있었습니다!!</p>      
+        </div>
+        <script type="module">
+            import * as THREE from 'three';
+            import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+            import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+            var renderer = new THREE.WebGLRenderer(); 
+            renderer.setSize( window.innerWidth, window.innerHeight ); //렌더러 창사이즈
+            document.body.appendChild( renderer.domElement ); 
+            scene.background = new THREE.Color( 0xffffff);
+            camera.position.z = 20;
+    
+            // 앰비언트 조명 설치
+            var ambient = new THREE.AmbientLight( 0xa1a1a1 ); //대충 실제처럼 만들어주기 위한 소스늑낌
+            scene.add( ambient );
+    
+            // 스포트 조명 설치
+            var light = new THREE.DirectionalLight( 0x0c18f2, 100, 0, Math.PI / 3 );  //색, 밝기
+            light.position.set( 0, 5, 6 );
+            light.target.position.set( 0, 0, 0 ); 
+            scene.add( light );
+            // 비어있는 3D 오브젝트 그룹 하나 만들기
+        var group = new THREE.Object3D();  // 닉네임만들기
+
+        const loader = new GLTFLoader(); //파일 로딩을 위한 상수
+        loader.load(
+            'ring.glb',  // 3D 파일 이름
+            function ( gltf ) {   // 3D 파일 로딩됐을 때 처리할 곳
+                group.add( gltf.scene); // 3D 파일 불러와서 group에 담기
+            },
+            function ( xhr ) {
+                console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' ); // 로딩 과정 표기
+            },
+            function ( error ) {
+                console.log( 'An error happened' ); // 로딩 에러 표기
+            }
+        );
+        group.scale.set(2,2,2);  // 모델 크기 다섯 배로 키우기
+        scene.add(group);  // scene에 모델 담기
+
+
+
+        // 마우스 콘트롤 넣어보기
+        const controls = new OrbitControls( camera, renderer.domElement );
+        var animate = function () {
+            requestAnimationFrame( animate );
+            group.rotation.y += 0.003;
+            group.rotation.x += 0.005;            
+            group.rotation.z -= 0.009;
+
+            renderer.render(scene, camera);
+
+
+            // 마우스 콘트롤 상시 제어
+            controls.update();
+        };
+        animate();
+
+    </script>
+</body>
+</html>
