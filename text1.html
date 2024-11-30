@@ -6,7 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Image Panel Carousel with Smooth and Consistent Transitions</title>
     <style>
-        @import url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunKg.woff');
+        /* ChosunKg 폰트 정의 */
+        @font-face {
+            font-family: 'ChosunKg';
+            src: url('chosunkg.woff2') format('woff2'),
+                 url('chosunkg.woff') format('woff'),
+                 url('chosunkg.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             display: flex;
             flex-direction: column; /* Arrange items vertically */
@@ -16,15 +25,16 @@
             background-color: #ffffff;
             margin: 0;
             overflow: hidden;
-            font-family: 'ChosunKg', sans-serif;
+            font-family: 'ChosunKg', sans-serif; /* 폰트 적용 */
         }
+
         .intro-text {
-            font-family: 'ChosunKg', sans-serif; /* Use your desired font */
+            font-family: 'ChosunKg', sans-serif; /* 폰트 적용 */
             font-size: 1.7rem;
             margin-bottom: 120px; /* Space below the text */
             color: #333; /* Text color */
             text-align: center; /* Centers the text horizontally */
-            line-height: 1.5; /* Adjusts the line spacing (1.5 is an example) */        
+            line-height: 1.5; /* Adjusts the line spacing (1.5 is an example) */
         }
 
         .carousel {
@@ -36,6 +46,7 @@
             align-items: center;
             perspective: 1000px;
         }
+
         .panel {
             position: absolute;
             width: 830px;
@@ -43,6 +54,7 @@
             transition: transform 2s ease-out, opacity 1s ease;
             opacity: 0.6;
         }
+
         /* Position classes */
         .position0 { transform: translateX(-650px) scale(0.4); z-index: -2; opacity: 1; }
         .position1 { transform: translateX(-600px) scale(0.6); z-index: -1; opacity: 1; }
@@ -53,6 +65,7 @@
         .position6 { transform: translateX(550px) scale(0.8); z-index: 0; opacity: 1; }
         .position7 { transform: translateX(600px) scale(0.6); z-index: -1; opacity: 1; }
         .position8 { transform: translateX(650px) scale(0.4); z-index: -2; opacity: 1; }
+
         /* Button styling */
         .right-button {
             position: absolute;
@@ -64,10 +77,12 @@
             width: 100px;
             height: 100px;
         }
+
         .right-button:hover {
             transform: scale(1.1); /* Slightly enlarge the button */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add shadow */
         }
+
         img {
             width: 100%;
             height: 100%;
@@ -76,8 +91,7 @@
 </head>
 <body>
     <!-- Introductory Text -->
-    <div class="intro-text">파인더를 소개합니다</br>화살표 위 마우스를 올려놓으세요</div>
-    
+    <div class="intro-text">파인더를 소개합니다<br>화살표를 클릭하세요</div>
     <div class="carousel">
         <div class="panel position0"><img src="image_1.png" alt="Image 1"></div>
         <div class="panel position1"><img src="image_2.png" alt="Image 2"></div>
@@ -89,38 +103,31 @@
         <div class="panel position7"><img src="image_8.png" alt="Image 8"></div>
         <div class="panel position8"><img src="image_9.png" alt="Image 9"></div>
     </div>
-    
     <button class="right-button" onmouseover="startAutoRotate()" onmouseout="stopAutoRotate()">
         <img src="SVG/right button.svg" alt="right-button">
     </button>
-
     <script>
         let panels = document.querySelectorAll('.panel');
         let currentImageIndex = 0;
         let autoRotateInterval;
 
         function rotatePanels() {
-            // Increment the image index and use modulo to wrap around 9 images
             currentImageIndex = (currentImageIndex + 1) % 9;
-
-            // Rotate positions by moving the first element to the end
-            panels = Array.from(panels); // Convert NodeList to Array to manipulate order
-            panels.push(panels.shift()); // Move the first element to the end
-
-            // Apply updated classes and images to each panel
+            panels = Array.from(panels);
+            panels.push(panels.shift());
             panels.forEach((panel, i) => {
                 panel.className = `panel position${i}`;
-                const imageIndex = (currentImageIndex + i) % 9 + 1; // Cycle from 1 to 9
+                const imageIndex = (currentImageIndex + i) % 9 + 1;
                 panel.querySelector('img').src = `image_${imageIndex}.png`;
             });
         }
 
         function startAutoRotate() {
-            autoRotateInterval = setInterval(rotatePanels, 2600); // Rotate every 1.5 seconds
+            autoRotateInterval = setInterval(rotatePanels, 2600);
         }
 
         function stopAutoRotate() {
-            clearInterval(autoRotateInterval); // Stop rotating
+            clearInterval(autoRotateInterval);
         }
     </script>
 </body>
