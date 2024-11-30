@@ -5,104 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>조사후기</title>
   <style>
-    @import url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunKg.woff');
+    /* ChosunKg 폰트 정의 */
+    @font-face {
+      font-family: 'ChosunKg';
+      src: url('chosunkg.woff2') format('woff2'),
+           url('chosunkg.woff') format('woff'),
+           url('chosunkg.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-body {
-    font-family: 'ChosunKg', sans-serif;
-  }
     /* Reset and basic styles */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'ChosunKg', sans-serif;
-  background-color: #f4f4f4;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'ChosunKg', sans-serif; /* 폰트 적용 */
+      background-color: #f4f4f4;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-.container {
-  max-width: 1000px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
 
-h1 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 50px;
-}
+    h1 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 50px;
+    }
 
-/* Icon container */
-.icon-container {
-  display: flex;
-  justify-content: space-around;
-  gap: 40px;
-}
+    /* Icon container */
+    .icon-container {
+      display: flex;
+      justify-content: space-around;
+      gap: 40px;
+    }
 
-/* General Icon Styles */
-.icon {
-  display: inline-block;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
+    /* General Icon Styles */
+    .icon {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
 
-.icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-/* Round Icon
-.round-icon {
-  border-radius: 50%;
-}
+    /* Round Icon */
+    .round-icon {
+      border-radius: 50%;
+    }
 
-/* Square Icon */
-/* .square-icon {
-  border-radius: 10;
-} */ 
+    /* Square Icon */
+    .square-icon {
+      border-radius: 10px;
+    }
 
-/* Hover effect */
-.icon:hover {
-  transform: scale(1.05);
-  border-color: blue;
-}
-
+    /* Hover effect */
+    .icon:hover {
+      transform: scale(1.05);
+      border-color: blue;
+    }
   </style>
-    <script>
-        // 새 창 열기 함수
-        function openNewWindow(event, url) {
-            event.preventDefault(); // 기본 동작(링크 이동) 방지
-            window.open(url, '_blank', 'width=800,height=600'); // 새 창 열기
-        }
-    </script>
+  <script>
+    // 새 창 열기 함수
+    function openNewWindow(event, url) {
+      event.preventDefault(); // 기본 동작(링크 이동) 방지
+      window.open(url, '_blank', 'width=800,height=600'); // 새 창 열기
+    }
+  </script>
 </head>
 <body>
-    <div class="container">
-        <h1>조사후기</h1>
-        <div class="icon-container">
-            <!-- Round Icon -->
-            <a href="ring.html" class="icon round-icon">
-                <img src="SVG/ring.svg" alt="Round Icon">
-            </a>
-            <!-- Square Icon -->
-            <a href="necklace.html" class="icon square-icon">
-                <img src="SVG/neck.svg" alt="Square Icon">
-            </a>
-            <!-- Round Icon - 새 창 열림 -->
-            <a href="text2.html" class="icon round-icon" onclick="openNewWindow(event, 'text2.html')">
-                <img src="SVG/close.svg" alt="Round Icon">
-            </a>
-        </div>
+  <div class="container">
+    <h1>조사후기</h1>
+    <div class="icon-container">
+      <!-- Round Icon -->
+      <a href="ring.html" class="icon round-icon">
+        <img src="SVG/ring.svg" alt="Round Icon">
+      </a>
+      <!-- Square Icon -->
+      <a href="necklace.html" class="icon square-icon">
+        <img src="SVG/neck.svg" alt="Square Icon">
+      </a>
+      <!-- Round Icon - 새 창 열림 -->
+      <a href="text2.html" class="icon round-icon" onclick="openNewWindow(event, 'text2.html')">
+        <img src="SVG/close.svg" alt="Round Icon">
+      </a>
     </div>
+  </div>
 </body>
 </html>
-
